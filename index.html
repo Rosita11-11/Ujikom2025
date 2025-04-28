@@ -84,3 +84,29 @@
   </style>
 </head>
 <body>
+  
+    <h1>SiTugas - To Do List</h1>
+
+  <div class="input-container">
+    <input type="text" id="taskName" placeholder="Nama Tugas">
+    <input type="text" id="priority" placeholder="Prioritas (Tinggi/Sedang/Rendah)">
+    <input type="date" id="deadline">
+    <button onclick="addTask()">Tambah</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>nama tugas</th>
+        <th>prioritas</th>
+        <th>tanggal</th>
+        <th>status</th>
+        <th>aksi</th>
+      </tr>
+    </thead>
+    <tbody id="taskList"></tbody>
+  </table>
+
+  <script>
+    let tasks = [];
