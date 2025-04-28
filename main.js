@@ -39,3 +39,32 @@ export async function ambildaftartugas() {
       tanggal: dok.data().tanggal,
     });
   });
+  return hasil;
+}
+
+export async function tambahtugas(tugas, status, prioritas, tanggal) {
+  try {
+    const dokRef = await addDoc(collection(db, 'senin'), {
+      tugas: tugas,
+      status: status,
+      prioritas: prioritas,
+      tanggal: tanggal,
+    });
+    console.log('berhasil menembah tugas ' + dokRef.id);
+  } catch (e) {
+    console.log('gagal menambah tugas ' + e);
+  }
+}
+
+export async function hapustugas(docId) {
+  await deleteDoc(doc(db, "senin", docId));
+}
+
+export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
+  await updateDoc(doc(db, "senin", docId), {
+    tugas: tugas,
+    status: status,
+    prioritas: prioritas,
+    tanggal: tanggal,
+  });
+}
