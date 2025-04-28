@@ -21,18 +21,6 @@ const firebaseConfig = {
     appId: "1:134418826980:web:ce438f43a3da1456b44ef1",
     measurementId: "G-K6CVYVCMZP"
 }
-let tasks = [];
-
-function addTask() {
-  const name = document.getElementById('taskName').value.trim();
-  const date = document.getElementById('taskDate').value;
-  const priority = document.getElementById('taskPriority').value;
-
-  if (!name || !date || !priority) {
-    alert("Semua input harus diisi!");
-    return;
-  }
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -51,6 +39,7 @@ export async function ambildaftartugas() {
       tanggal: dok.data().tanggal,
     });
   });
+
   return hasil;
 }
 
@@ -80,6 +69,7 @@ export async function ubahtugas(docId, tugas, status, prioritas, tanggal) {
     tanggal: tanggal,
   });
 }
+
 export async function ambiltugas(docId) {
   const docRef = await doc(db, "senin", docId);
   const docSnap = await getDoc(docRef);
@@ -98,6 +88,7 @@ function ubahStatus(tombol) {
     tombol.dataset.status = "Selesai";
   }
 }
+
 // Event listener untuk hapus tugas
 $(".tombol-hapus").click(async function () {
   await hapustugas($(this).attr("data-id"));
@@ -122,7 +113,8 @@ $(document).on("click", ".btn-status", function () {
   } else {
     statusBaru = "Belum Selesai";
   }
-    // Update tampilan tombol
+
+  // Update tampilan tombol
   $(this).attr("data-status", statusBaru);
   $(this).text(statusBaru);
   updateWarnaStatus($(this), statusBaru);
@@ -141,6 +133,7 @@ function updateWarnaStatus(button, status) {
     button.css("background-color", "#28a745").css("color", "white");
   }
 }
+
 // Atur warna status setelah halaman dimuat
 $(document).ready(function () {
   $(".btn-status").each(function () {
