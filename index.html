@@ -155,3 +155,19 @@ function addTask() {
       tasks.splice(index, 1);
       renderTasks();
     }
+    
+function editTask(index) {
+      const newName = prompt("Nama tugas baru:", tasks[index].name);
+      const newPriority = prompt("Prioritas baru:", tasks[index].priority);
+      const newDate = prompt("Tanggal baru (YYYY-MM-DD):", tasks[index].date);
+      if (newName && newPriority && newDate) {
+        tasks[index].name = newName;
+        tasks[index].priority = newPriority;
+        tasks[index].date = newDate;
+        renderTasks();
+      }
+    }
+  </script>
+
+</body>
+</html>
