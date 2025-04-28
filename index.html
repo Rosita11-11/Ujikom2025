@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Tugas - To Do List</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
+ <html lang="en">
+
+ <head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <title>To-Do List</title>
+
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+   <script type="module" src="main.js"></script>
+   <link rel="stylesheet" href="style.css">    
+ 
+  </head>
+ <body>
+   <table class="table" id="daftar-tugas">
+     <style>
+        body {
+          font-family: 'Segoe UI', sans-serif;
       background-color: darkred;
       padding: 20px;
       color: #4d004d;
@@ -13,10 +27,10 @@
 
     h1 {
       text-align: center;
-      color: papayawhip;
+      color: #cc0066;
     }
 
-    input-container {
+    .input-container {
       display: flex;
       gap: 10px;
       margin-bottom: 20px;
@@ -26,34 +40,24 @@
 
     input, button {
       padding: 8px 12px;
-      border: 1px solid #cc0066;
+      border: 1px  #cc0066;
       border-radius: 5px;
       font-size: 14px;
     }
 
     button {
-      background-color: #ff66b3;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
+      background-color: red;
+            margin: 0;
+            padding: 0;
+            color: white;
+            font-family: Arial, sans-serif;
     }
 
     button:hover {
       background-color: #e60073;
     }
-    
-   button {
-      background-color: #ff66b3;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
-    }
 
-    button:hover {
-      background-color: #e60073;
-    }
-    
-   table {
+    table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
@@ -70,7 +74,8 @@
       background-color: #cc0066;
       color: white;
     }
-    done {
+
+    .done {
       text-decoration: line-through;
       color: #666;
       background-color: #ffe6f0;
@@ -84,92 +89,75 @@
   </style>
 </head>
 <body>
-  
-    <h1>Tugas - To Do List</h1>
+            
+    </style>
+     <thead>
+       <tr>
+         <th>tugas</th>
+       </tr>
+       <tr>
+         <th scope="col">#</th>
+         <th scope="col">tugas</th>
+         <th scope="col" id="status">status</th>
+         <th scope="col">prioritas</th>
+         <th scope="col">tanggal</th>
+         <th>aksi</th>
+         <th>aksi</th>
+       </tr>
+     </thead>
+     <tbody>
+     </tbody>
+   </table>
 
-  <div class="input-container">
-    <input type="text" id="taskName" placeholder="Nama Tugas">
-    <input type="text" id="priority" placeholder="Prioritas (Tinggi/Sedang/Rendah)">
-    <input type="date" id="deadline">
-    <th>
-    <button onclick="addTask()">Tambah</button>
-    </th>
-  </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>nama tugas</th>
-        <th>prioritas</th>
-        <th>tanggal</th>
-        <th>status</th>
-        <th>aksi</th>
-      </tr>
-    </thead>
-    <tbody id="taskList"></tbody>
-  </table>
+   <a href="tambah.html" class="tombol">tambah</a>
 
-  <script>
-    let tasks = [];
-    
-    function renderTasks() {
-      const list = document.getElementById('taskList');
-      list.innerHTML = '';
-      tasks.forEach((task, index) => {
-        list.innerHTML += `
-          <tr class="${task.status ? 'done' : ''}">
-            <td>${index + 1}</td>
-            <td>${task.name}</td>
-            <td>${task.priority}</td>
-            <td>${task.date}</td>
-            <td>${task.status ? 'Selesai' : 'Belum'}</td>
-            <td>
-              <button onclick="markDone(${index})">Selesai</button>
-              <button onclick="editTask(${index})">Edit</button>
-              <button onclick="deleteTask(${index})">Hapus</button>
-            </td>
-          </tr>
-        `;
-      });
-    }
-function addTask() {
-      const name = document.getElementById('taskName').value.trim();
-      const priority = document.getElementById('priority').value.trim();
-      const date = document.getElementById('deadline').value;
-      if (!name) {
-        alert("Nama tugas tidak boleh kosong!");
-        return;
-      }
-      tasks.push({ name, priority, date, status: false });
-      renderTasks();
-      document.getElementById('taskName').value = '';
-      document.getElementById('priority').value = '';
-      document.getElementById('deadline').value = '';
-    }
+   <script type="module">
+     import { ambildaftartugas, hapustugas } from './main.js';
 
-    function markDone(index) {
-      tasks[index].status = true;
-      renderTasks();
-    }
+     $(document).ready(async function() {
+       let elemenDaftar = $("#daftar-tugas > tbody");
+       let daftartugas = await ambildaftartugas();
+       let nomor = 1;
+       daftartugas.forEach((data) => {
+         elemenDaftar.append(
+           `<tr>
+             <th>${nomor}</th>
+             <td>${data.tugas}</td>
+             <td>
+               <button class="btn-status" data-status="${data.status}" data-id="${data.id}">${data.status}</button>
+             </td>
+             <td>${data.prioritas}</td>
+             <td>${data.tanggal}</td>
+             <td><button class="btn btn-warning ubah" data-id="${data.id}" data-tugas="${data.tugas}" data-status="${data.status}" data-prioritas="${data.prioritas}" data-tanggal="${data.tanggal}">Ubah</button></td>
+             <td><a href="#" class="btn btn-danger tombol-hapus" data-id="${data.id}">Hapus</a></td>
+           </tr>`
+         );
+         nomor++;
+       });
 
-    function deleteTask(index) {
-      tasks.splice(index, 1);
-      renderTasks();
-    }
-    
-function editTask(index) {
-      const newName = prompt("Nama tugas baru:", tasks[index].name);
-      const newPriority = prompt("Prioritas baru:", tasks[index].priority);
-      const newDate = prompt("Tanggal baru (YYYY-MM-DD):", tasks[index].date);
-      if (newName && newPriority && newDate) {
-        tasks[index].name = newName;
-        tasks[index].priority = newPriority;
-        tasks[index].date = newDate;
-        renderTasks();
-      }
-    }
-  </script>
+       // Gunakan event delegation untuk hapus tugas
+       $(document).on('click', '.tombol-hapus', async function() {
+         await hapustugas($(this).attr('data-id'));
+         location.reload();
+       });
 
-</body>
-</html>
+       // Gunakan event delegation untuk ubah tugas
+       $(document).on('click', '.ubah', function() {
+         let docId = $(this).attr('data-id');
+         let tugas = $(this).attr('data-tugas');
+         let status = $(this).attr('data-status');
+         let prioritas = $(this).attr('data-prioritas');
+         let tanggal = $(this).attr('data-tanggal');
+
+         window.location.replace(`ubahtugas.html?docId=${docId}&tugas=${tugas}&status=${status}&prioritas=${prioritas}&tanggal=${tanggal}`);
+       });
+     });
+   </script>
+   
+ 
+   <h1></h1>
+
+ </body>
+
+ </html>
