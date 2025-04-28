@@ -131,3 +131,27 @@
         `;
       });
     }
+function addTask() {
+      const name = document.getElementById('taskName').value.trim();
+      const priority = document.getElementById('priority').value.trim();
+      const date = document.getElementById('deadline').value;
+      if (!name) {
+        alert("Nama tugas tidak boleh kosong!");
+        return;
+      }
+      tasks.push({ name, priority, date, status: false });
+      renderTasks();
+      document.getElementById('taskName').value = '';
+      document.getElementById('priority').value = '';
+      document.getElementById('deadline').value = '';
+    }
+
+    function markDone(index) {
+      tasks[index].status = true;
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      renderTasks();
+    }
