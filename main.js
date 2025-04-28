@@ -21,6 +21,18 @@ const firebaseConfig = {
     appId: "1:134418826980:web:ce438f43a3da1456b44ef1",
     measurementId: "G-K6CVYVCMZP"
 }
+let tasks = [];
+
+function addTask() {
+  const name = document.getElementById('taskName').value.trim();
+  const date = document.getElementById('taskDate').value;
+  const priority = document.getElementById('taskPriority').value;
+
+  if (!name || !date || !priority) {
+    alert("Semua input harus diisi!");
+    return;
+  }
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
