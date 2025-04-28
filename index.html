@@ -110,3 +110,24 @@
 
   <script>
     let tasks = [];
+    
+    function renderTasks() {
+      const list = document.getElementById('taskList');
+      list.innerHTML = '';
+      tasks.forEach((task, index) => {
+        list.innerHTML += `
+          <tr class="${task.status ? 'done' : ''}">
+            <td>${index + 1}</td>
+            <td>${task.name}</td>
+            <td>${task.priority}</td>
+            <td>${task.date}</td>
+            <td>${task.status ? 'Selesai' : 'Belum'}</td>
+            <td>
+              <button onclick="markDone(${index})">Selesai</button>
+              <button onclick="editTask(${index})">Edit</button>
+              <button onclick="deleteTask(${index})">Hapus</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
